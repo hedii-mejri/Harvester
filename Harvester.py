@@ -257,7 +257,7 @@ def start(argv):
         full_host = hostchecker.Checker(all_hosts)
         full = full_host.check()
         for host in full:
-            ip = host.split(' <==>')[0]
+            ip = host.split(' : ')[0]
             print host
             if host_ip.count(ip.lower()):
                 pass
@@ -270,7 +270,7 @@ def start(argv):
         print "\n[+] Starting active queries:"
         analyzed_ranges = []
         for x in full:
-            ip = x.split(" <==> ")[0]
+            ip = x.split(" : ")[0]
             range = ip.split(".")
             range[3] = "0/24"
             range = string.join(range, '.')
@@ -330,8 +330,8 @@ def start(argv):
                 x = re.sub('<','',x)
                 x = re.sub('>','',x)
                 print l + "\t" + x
-                vhost.append(l + " <==> " + x)
-                full.append(l + " <==> " + x)
+                vhost.append(l + " : " + x)
+                full.append(l + " : " + x)
         vhost=sorted(set(vhost))
     else:
         pass
@@ -342,7 +342,7 @@ def start(argv):
         for x in full:
             print x
             try:
-                ip = x.split(" <==> ")[0]
+                ip = x.split(" : ")[0]
                 if not shodanvisited.count(ip):
                     print "\tSearching for: " + x
                     a = shodansearch.search_shodan(ip)
@@ -356,7 +356,7 @@ def start(argv):
         print "[+] Shodan results:"
         print "==================="
         for x in shodanres:
-            print x.split("SAPO")[0] + " <==> " + x.split("SAPO")[1]
+            print x.split("SAPO")[0] + " : " + x.split("SAPO")[1]
     else:
         pass
 
@@ -436,7 +436,7 @@ def start(argv):
                     reg_server = re.compile('Server:.*')
                     temp = reg_server.findall(res[1])
                     if temp != []:
-                        shodanalysis.append(res[0] + " <==> " + temp[0])
+                        shodanalysis.append(res[0] + " : " + temp[0])
                     
                     file.write('</shodan>')
                 if shodanalysis != []:

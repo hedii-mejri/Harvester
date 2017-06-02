@@ -40,10 +40,10 @@ class htmlExport():
         page.div(class_="container")
 
         page.div(class_="card")
-        page.h1("Investigations Results", class_="card-header")
+        page.h1("Investigations Results", class_="card-header text-center")
         page.div(class_="card-block")
         page.h3("Domain Scanned : " + self.domain,
-                class_="card-title mb-2 text-muted")
+                class_="card-title mb-2 text-muted text-center")
 
         page.body("<br>")
 
@@ -61,7 +61,7 @@ class htmlExport():
 
         page.body("<br>")
         page.div(class_="card  card-outline-success")
-        page.h5("Emails", class_="card-header card-success card-inverse text-center")
+        page.h5('Emails   <span class="badge badge-pill badge-danger">' + str(len(self.users)) + '</span>', class_="card-header card-success card-inverse text-center")
         page.div(class_="card-block")
         if self.users != []:
             page.ul(class_="list-group")
@@ -74,7 +74,7 @@ class htmlExport():
 
         page.body("<br>")
         page.div(class_="card card-outline-success")
-        page.h5("Hosts", class_="card-header card-success card-inverse text-center")
+        page.h5('Hosts   <span class="badge badge-pill badge-danger">' + str(len(self.hosts)) + '</span>', class_="card-header card-success card-inverse text-center")
         page.div(class_="card-block")
         if self.hosts != []:
             page.ul(class_="list-group")
@@ -82,6 +82,14 @@ class htmlExport():
             page.ul.close()
         else:
             page.h6("No hosts found")
+        page.div.close()
+        page.div.close()
+
+
+        page.body("<br>")
+        page.div(class_="card card-outline-success")
+        page.h5('Virtual Hosts   <span class="badge badge-pill badge-danger">' + str(len(self.vhost)) + '</span>', class_="card-header card-success card-inverse text-center")
+        page.div(class_="card-block")
         if self.vhost != []:
             page.ul(class_="list-group")
             page.li(self.vhost, class_="list-group-item")
