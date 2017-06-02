@@ -1,5 +1,6 @@
 from lib import markup
 from lib import graphs
+import time
 import re
 
 
@@ -23,10 +24,10 @@ class htmlExport():
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="lib/assets/css/bootstrap.min.css">
-    <script src="lib/assets/js/jquery-3.2.1.slim.min.js"></script>
-    <script src="lib/assets/js/tether.min.js"></script>
-    <script src="lib/assets/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../lib/assets/css/bootstrap.min.css">
+    <script src="../lib/assets/js/jquery-3.2.1.slim.min.js"></script>
+    <script src="../lib/assets/js/tether.min.js"></script>
+    <script src="../lib/assets/js/bootstrap.min.js"></script>
 		"""
         self.style = a
 
@@ -94,7 +95,7 @@ class htmlExport():
         page.body.close()
         page.html.close()
 
-        file = open(self.fname, 'w')
+        file = open('outputs/' + self.domain + '_' + time.strftime("%d-%m-%Y_%H-%M-%S")+'_'+ self.fname+".html",'w')
         for x in page.content:
             try:
                 file.write(x)

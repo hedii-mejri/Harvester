@@ -31,7 +31,7 @@ class dns_reverse():
             sys.stdout.flush()
         try:
             name = DNS.Base.DnsRequest(b, qtype='ptr').req().answers[0]['data']
-            return host + ":" + name
+            return host + " : " + name
         except:
             pass
 
@@ -111,7 +111,7 @@ class dns_force():
                 server=self.nameserver).req(
             )
             hostip = test.answers[0]['data']
-            return hostip + ":" + hostname
+            return hostip + " : " + hostname
         except Exception as e:
             pass
 

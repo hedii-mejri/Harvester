@@ -4,6 +4,7 @@ import string
 import httplib
 import sys
 import os
+import time
 from socket import *
 import re
 import getopt
@@ -49,7 +50,7 @@ def usage():
     print "            google 100 to 100, and pgp doesn't use this option)"
     print "       -h: use SHODAN database to query discovered hosts"
     print "\nExamples:"
-    print "        " + comm + " -d microsoft.com -l 500 -b google -h myresults.html"
+    print "        " + comm + " -d microsoft.com -l 500 -b google -f myresults"
     print "        " + comm + " -d microsoft.com -b pgp"
     print "        " + comm + " -d microsoft -l 200 -b linkedin"
     print "        " + comm + " -d apple.com -b googleCSE -l 500 -s 300\n"
@@ -394,25 +395,28 @@ def start(argv):
             print e
             print "Error creating the file"
         try:
-            filename = filename.split(".")[0] + ".xml"
-            file = open(filename, 'w')
+            file = open('outputs/' + word + '_' +time.strftime('%d-%m-%Y_%H-%M-%S') + '_' +  filename+ '.xml', 'w')
             file.write('<?xml version="1.0" encoding="UTF-8"?><sec-harvest>')
+            file.write('<emails>')
             for x in all_emails:
                 file.write('<email>' + x + '</email>')
-
+            file.write('</emails>')
+            file.write('<hosts>')
             for x in full:
-                x = x.split(" <==> ")
+                x = x.split(" : ")
                 if len(x) == 2:
                     file.write('<host>' + '<ip>' + x[0] + '</ip><hostname>' + x[1]  + '</hostname>' + '</host>')
                 else:
                     file.write('<host>' + x + '</host>')
+            file.write('</hosts>')
+            file.write('<vhosts>')
             for x in vhost:
-                x = x.split(" <==> ")
+                x = x.split(" : ")
                 if len(x) == 2:
                     file.write('<vhost>' + '<ip>' + x[0] + '</ip><hostname>' + x[1]  + '</hostname>' + '</vhost>')
                 else:
                     file.write('<vhost>' + x + '</vhost>')
-
+            file.write('</vhosts>')
             if shodanres != []:
                 shodanalysis = []
                 for x in shodanres:
